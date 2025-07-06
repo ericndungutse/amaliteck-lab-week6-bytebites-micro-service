@@ -9,8 +9,10 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.ndungutse.restaurant_service.exception.CustomAuthEntryPoint;
+import com.ndungutse.restaurant_service.security.HeaderAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -18,9 +20,12 @@ import com.ndungutse.restaurant_service.exception.CustomAuthEntryPoint;
 public class SecurityConfig {
 
     private final CustomAuthEntryPoint customAuthEntryPoint;
+    private final HeaderAuthenticationFilter headerAuthenticationFilter;
 
-    public SecurityConfig(CustomAuthEntryPoint customAuthEntryPoint) {
+    public SecurityConfig(CustomAuthEntryPoint customAuthEntryPoint,
+            HeaderAuthenticationFilter headerAuthenticationFilter) {
         this.customAuthEntryPoint = customAuthEntryPoint;
+        this.headerAuthenticationFilter = headerAuthenticationFilter;
     }
 
     @Bean
@@ -42,6 +47,7 @@ public class SecurityConfig {
                 .httpBasic(AbstractHttpConfigurer::disable)
 
                 .logout(AbstractHttpConfigurer::disable)
+                .addFilterBefore(headerAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(ex -> ex.authenticationEntryPoint(customAuthEntryPoint));
 
         return http.build();

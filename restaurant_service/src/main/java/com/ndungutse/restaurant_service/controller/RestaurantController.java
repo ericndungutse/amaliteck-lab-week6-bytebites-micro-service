@@ -32,6 +32,13 @@ public class RestaurantController {
         return new ResponseEntity<>(restaurants, HttpStatus.OK);
     }
 
+    // Get current user's restaurants
+    @GetMapping("/my-restaurants")
+    public ResponseEntity<List<RestaurantDto>> getMyRestaurants() {
+        List<RestaurantDto> restaurants = restaurantService.getMyRestaurants();
+        return new ResponseEntity<>(restaurants, HttpStatus.OK);
+    }
+
     // Get restaurant by ID
     @GetMapping("/{id}")
     public ResponseEntity<RestaurantDto> getRestaurantById(@PathVariable Long id) {
