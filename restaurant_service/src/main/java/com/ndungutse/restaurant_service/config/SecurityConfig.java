@@ -2,15 +2,26 @@ package com.ndungutse.restaurant_service.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 
+import com.ndungutse.restaurant_service.exception.CustomAuthEntryPoint;
+
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
+
+    private final CustomAuthEntryPoint customAuthEntryPoint;
+
+    public SecurityConfig(CustomAuthEntryPoint customAuthEntryPoint) {
+        this.customAuthEntryPoint = customAuthEntryPoint;
+    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -21,18 +32,19 @@ public class SecurityConfig {
                 // Disable form login
                 .formLogin(AbstractHttpConfigurer::disable)
 
-                // Disable HTTP Basic authentication
-                .httpBasic(AbstractHttpConfigurer::disable)
-
                 // Set session creation policy to stateless (no sessions)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
-                // Configure authorization - permit all requests
-                .authorizeHttpRequests(authz -> authz.anyRequest().permitAll())
+                // Configure authorization rules
+                .authorizeHttpRequests(authz -> authz
+                        .requestMatchers(HttpMethod.GET, "/api/v1/restaurants/**").permitAll().anyRequest()
+                        .hasRole("RESTAURANT_OWNER"))
+                .httpBasic(AbstractHttpConfigurer::disable)
 
-                // Disable default logout
-                .logout(AbstractHttpConfigurer::disable);
+                .logout(AbstractHttpConfigurer::disable)
+                .exceptionHandling(ex -> ex.authenticationEntryPoint(customAuthEntryPoint));
 
         return http.build();
     }
+
 }
