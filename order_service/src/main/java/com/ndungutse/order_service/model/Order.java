@@ -40,19 +40,19 @@ public class Order {
     @Column(name = "status", nullable = false)
     private OrderStatus status = OrderStatus.PENDING;
 
-    @Column(name = "total_amount", precision = 10, scale = 2)
-    private Double totalAmount;
+    @Column(name = "total_amount")
+    private Double total_amount;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     // Constructor without ID and timestamps (for creation)
-    public Order(Long customerId, Long restaurantId, String description, Double totalAmount) {
+    public Order(Long customerId, Long restaurantId, String description, Double total_amount) {
         this.customerId = customerId;
         this.restaurantId = restaurantId;
         this.description = description;
-        this.totalAmount = totalAmount;
+        this.total_amount = total_amount;
         this.status = OrderStatus.PENDING;
     }
 

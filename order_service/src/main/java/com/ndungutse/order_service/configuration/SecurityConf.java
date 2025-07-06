@@ -39,7 +39,8 @@ public class SecurityConf {
 
                 // Configure authorization rules
                 .authorizeHttpRequests(authz -> authz
-                        .anyRequest().permitAll())
+                        .requestMatchers(HttpMethod.POST, "/api/v1/orders/**").hasRole("CUSTOMER")
+                        .anyRequest().authenticated())
                 .httpBasic(AbstractHttpConfigurer::disable)
 
                 .logout(AbstractHttpConfigurer::disable)

@@ -23,6 +23,8 @@ public class CustomAuthEntryPoint implements AuthenticationEntryPoint {
     public void commence(HttpServletRequest request, HttpServletResponse response,
             AuthenticationException authException) throws IOException, ServletException {
 
+        System.out.println("************************** HERE" + authException);
+
         System.out.println("Unauthorized request: " + authException.getMessage());
         Map<String, String> error = new HashMap<>();
         error.put("message", authException.getMessage());

@@ -1,19 +1,22 @@
 package com.ndungutse.order_service.service;
 
-import com.ndungutse.order_service.model.Order;
-import com.ndungutse.order_service.model.OrderStatus;
-import com.ndungutse.order_service.repository.OrderRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
+
+import com.ndungutse.order_service.model.Order;
+import com.ndungutse.order_service.model.OrderStatus;
+import com.ndungutse.order_service.repository.OrderRepository;
+
 @Service
-@RequiredArgsConstructor
 public class OrderService {
 
     private final OrderRepository orderRepository;
+
+    public OrderService(OrderRepository orderRepository) {
+        this.orderRepository = orderRepository;
+    }
 
     // Create a new order
     public Order createOrder(Order order) {
@@ -53,7 +56,7 @@ public class OrderService {
         if (order.getDescription() == null || order.getDescription().trim().isEmpty()) {
             throw new IllegalArgumentException("Order description is required");
         }
-        if (order.getTotalAmount() != null && order.getTotalAmount() < 0) {
+        if (order.getTotal_amount() != null && order.getTotal_amount() < 0) {
             throw new IllegalArgumentException("Total amount cannot be negative");
         }
     }
