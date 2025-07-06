@@ -4,6 +4,10 @@ server:
 spring:
   application:
     name: GATEWAY
+  security:
+    jwt:
+      secret: ${JWT_SECRET}
+      expirationMs: ${JWT_EXPIRATION_MS:86400000}
   cloud:
     gateway:
       routes:
