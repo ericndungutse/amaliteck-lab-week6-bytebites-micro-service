@@ -39,8 +39,7 @@ public class SecurityConf {
 
                 // Configure authorization rules
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers(HttpMethod.GET, "/api/v1/restaurants/**").permitAll().anyRequest()
-                        .hasRole("RESTAURANT_OWNER"))
+                        .anyRequest().permitAll())
                 .httpBasic(AbstractHttpConfigurer::disable)
 
                 .logout(AbstractHttpConfigurer::disable)
