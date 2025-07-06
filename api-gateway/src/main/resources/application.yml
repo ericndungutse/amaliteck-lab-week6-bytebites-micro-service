@@ -1,0 +1,22 @@
+server:
+  port: 5000
+
+spring:
+  application:
+    name: GATEWAY
+  cloud:
+    gateway:
+      routes:
+        - id: auth-service
+          uri: lb://AUTH-SERVICE
+          predicates:
+            - Path=/api/v1/auth/**
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8082/eureka
+logging:
+  charset:
+    console: UTF-8
+  level:
+    'org.springframework.cloud.gateway': DEBUG
