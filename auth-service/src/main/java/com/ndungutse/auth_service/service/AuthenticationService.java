@@ -3,6 +3,7 @@ package com.ndungutse.auth_service.service;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import com.ndungutse.auth_service.dto.LoginRequest;
 import com.ndungutse.auth_service.dto.LoginResponse;
@@ -11,6 +12,7 @@ import com.ndungutse.auth_service.repository.UserRepository;
 import com.ndungutse.auth_service.security.JwtUtils;
 import org.springframework.security.core.Authentication;
 
+@Service
 public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final JwtUtils jwtUtils;
