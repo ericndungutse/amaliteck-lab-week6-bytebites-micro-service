@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: eureka-server
+server:
+  port: 2000
+eureka:
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+  instance:
+    prefer-ip-address: true
+  server:
+    enable-self-preservation: false
