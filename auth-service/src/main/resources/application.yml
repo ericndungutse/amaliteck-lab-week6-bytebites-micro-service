@@ -23,3 +23,14 @@ spring:
     properties:
       hibernate:
         format_sql: true
+# Debug configuration
+debug: true # Enables debug mode for Spring Boot
+
+logging:
+  level:
+    root: INFO
+    com.yourpackage: DEBUG # Replace with your package name
+    org.springframework.security: DEBUG # For security debugging
+    org.hibernate: DEBUG # For Hibernate debugging
+    org.springframework.web: DEBUG # For web request debugging
+    org.springframework.jdbc: DEBUG # For database debugging
