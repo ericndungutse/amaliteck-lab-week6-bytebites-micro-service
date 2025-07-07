@@ -45,6 +45,27 @@ services:
     depends_on:
       - config-server
       - eureka-server
+  order_db:
+    image: postgres:latest
+    container_name: byte_bytes_order_service_db
+    ports:
+      - '5434:5432'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: eric
+      POSTGRES_DB: order_service
+    depends_on:
+      - config-server
+      - eureka-server
+  rabbitmq:
+    image: rabbitmq:management
+    container_name: byte_bytes_rabbitmq
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: password
   user_db:
     image: postgres:latest
     container_name: byte_bytes_user_service_db
@@ -77,5 +98,17 @@ services:
       - ./restaurant_service/src/main/resources/.env
     depends_on:
       - restaurant_db
+      - config-server
+      - eureka-server
+  order-service:
+    build:
+      context: ./order_service
+    container_name: byte_bytes_order_service
+    ports:
+      - '6000:6000'
+    env_file:
+      - ./order_service/src/main/resources/.env
+    depends_on:
+      - order_db
       - config-server
       - eureka-server
