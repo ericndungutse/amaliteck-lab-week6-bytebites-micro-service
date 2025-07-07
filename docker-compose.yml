@@ -21,6 +21,18 @@ services:
       SPRING_APPLICATION_NAME: eureka-server
       SPRING_CONFIG_IMPORT: 'configserver:'
 
+  gateway:
+    build:
+      context: ./api-gateway
+    container_name: byte_bytes_gateway
+    ports:
+      - '5000:5000'
+    depends_on:
+      - config-server
+      - eureka-server
+    env_file:
+      - ./api-gateway/src/main/resources/.env
+
   restaurant_db:
     image: postgres:latest
     container_name: byte_bytes_restaurant_service_db
