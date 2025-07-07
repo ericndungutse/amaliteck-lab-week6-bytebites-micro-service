@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import com.ndungutse.auth_service.service.CustomUserDetails;
@@ -26,11 +25,11 @@ import jakarta.servlet.http.HttpServletRequest;
 public class JwtUtils {
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
-    // @Value("${jwt.secret}")
-    private String jwtSecret = "sasnllansakndlnsadklnaskndksd3eworjewnjowebroninwpeinrew";
+    @Value("${spring.security.jwt.secret}")
+    private String jwtSecret;
 
-    // @Value("${jwt.expirationMs}")
-    private String jwtExpirationMS = "86400000";
+    @Value("${spring.security.jwt.expirationMs}")
+    private String jwtExpirationMS;
 
     // Get Jwt from header of the request
     public String getJwtFromHeader(HttpServletRequest request) {
