@@ -26,11 +26,11 @@ import jakarta.servlet.http.HttpServletRequest;
 public class JwtUtils {
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
-    @Value("${spring.security.jwt.secret}")
-    private String jwtSecret;
+    // @Value("${jwt.secret}")
+    private String jwtSecret = "sasnllansakndlnsadklnaskndksd3eworjewnjowebroninwpeinrew";
 
-    @Value("${spring.security.jwt.expirationMs}")
-    private String jwtExpirationMS;
+    // @Value("${jwt.expirationMs}")
+    private String jwtExpirationMS = "86400000";
 
     // Get Jwt from header of the request
     public String getJwtFromHeader(HttpServletRequest request) {
