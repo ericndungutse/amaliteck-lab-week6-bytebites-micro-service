@@ -23,6 +23,8 @@ public class CustomAuthEntryPoint implements AuthenticationEntryPoint {
     public void commence(HttpServletRequest request, HttpServletResponse response,
             AuthenticationException authException) throws IOException, ServletException {
 
+        System.out.println("*****************************" + request.getRequestURI());
+
         System.out.println("Unauthorized request: " + request.getRequestURI());
         Map<String, String> error = new HashMap<>();
         error.put("message", "Unauthorized: Please signin or register to continue");
